@@ -98,13 +98,13 @@ export default function ConsultaCiudadanoPage() {
             {Object.entries(citizen).map(([key, value]) => {
               // Ignorar campos técnicos de MongoDB que no son útiles para el usuario
               if (key === '__v') return null;
-              
+
               // Formatear el nombre del campo para mostrar
               const nombreCampo = key
                 .replace(/([A-Z])/g, ' $1')
                 .replace(/^./, str => str.toUpperCase())
                 .trim();
-              
+
               // Mapear nombres de campos comunes a etiquetas más amigables
               const etiquetas: Record<string, string> = {
                 '_id': 'ID',
@@ -118,12 +118,12 @@ export default function ConsultaCiudadanoPage() {
                 'createdAt': 'Fecha de Creación',
                 'updatedAt': 'Última Actualización',
               };
-              
+
               const etiqueta = etiquetas[key] || nombreCampo;
-              
+
               // Formatear el valor
               let valorFormateado: string | ReactNode = String(value || '-');
-              
+
               // Manejar fechas
               if (value && typeof value === 'string') {
                 // Intentar parsear como fecha si tiene formato ISO
@@ -147,7 +147,7 @@ export default function ConsultaCiudadanoPage() {
                   }
                 }
               }
-              
+
               // Manejar estado especial
               if (key === 'estado') {
                 valorFormateado = (
@@ -158,17 +158,17 @@ export default function ConsultaCiudadanoPage() {
                   </span>
                 );
               }
-              
+
               // Manejar ID especial
               if (key === '_id') {
                 valorFormateado = (
                   <span className="font-mono text-sm">{String(value)}</span>
                 );
               }
-              
+
               // Determinar si ocupa 2 columnas
               const ocupaDosColumnas = ['nombre', 'domicilio'].includes(key);
-              
+
               return (
                 <div key={key} className={ocupaDosColumnas ? 'md:col-span-2' : ''}>
                   <label className="text-sm font-medium text-slate-600 block mb-1">
@@ -188,166 +188,3 @@ export default function ConsultaCiudadanoPage() {
     </div>
   );
 }
-
-
-            <div>
-              <label className="text-sm font-medium text-slate-600">Cédula</label>
-              <p className="text-lg font-semibold text-slate-900">{citizen.cedula}</p>
-            </div>
-
-            {citizen.nombre && (
-              <div className="md:col-span-2">
-                <label className="text-sm font-medium text-slate-600">Nombre Completo</label>
-                <p className="text-lg font-semibold text-slate-900">{citizen.nombre}</p>
-              </div>
-            )}
-
-            {citizen.fechanacimiento && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Fecha de Nacimiento</label>
-                <p className="text-lg font-semibold text-slate-900">
-                  {new Date(citizen.fechanacimiento).toLocaleDateString('es-ES', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </p>
-              </div>
-            )}
-
-            {citizen.lugarnacimiento && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Lugar de Nacimiento</label>
-                <p className="text-lg font-semibold text-slate-900">{citizen.lugarnacimiento}</p>
-              </div>
-            )}
-
-            {citizen.nacionalidad && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Nacionalidad</label>
-                <p className="text-lg font-semibold text-slate-900">{citizen.nacionalidad}</p>
-              </div>
-            )}
-
-            {citizen.estadocivil && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Estado Civil</label>
-                <p className="text-lg font-semibold text-slate-900">{citizen.estadocivil}</p>
-              </div>
-            )}
-
-            {citizen.domicilio && (
-              <div className="md:col-span-2">
-                <label className="text-sm font-medium text-slate-600">Domicilio</label>
-                <p className="text-lg font-semibold text-slate-900">{citizen.domicilio}</p>
-              </div>
-            )}
-
-            {citizen.profesion && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Profesión</label>
-                <p className="text-lg font-semibold text-slate-900">{citizen.profesion}</p>
-              </div>
-            )}
-
-            {citizen.instruccion && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Instrucción</label>
-                <p className="text-lg font-semibold text-slate-900">{citizen.instruccion}</p>
-              </div>
-            )}
-
-            {citizen.fechaexpedicion && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Fecha de Expedición</label>
-                <p className="text-lg font-semibold text-slate-900">
-                  {new Date(citizen.fechaexpedicion).toLocaleDateString('es-ES', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </p>
-              </div>
-            )}
-
-            {citizen.estado && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Estado</label>
-                <p className={`text-lg font-semibold ${
-                  citizen.estado === 'ACTIVA' ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  {citizen.estado}
-                </p>
-              </div>
-            )}
-
-            {/* Campos de MongoDB y otros campos no mapeados */}
-            {citizen._id && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">ID</label>
-                <p className="text-lg font-semibold text-slate-900 font-mono text-sm">{citizen._id}</p>
-              </div>
-            )}
-
-            {citizen.createdAt && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Fecha de Creación</label>
-                <p className="text-lg font-semibold text-slate-900">
-                  {new Date(citizen.createdAt).toLocaleString('es-ES')}
-                </p>
-              </div>
-            )}
-
-            {citizen.updatedAt && (
-              <div>
-                <label className="text-sm font-medium text-slate-600">Última Actualización</label>
-                <p className="text-lg font-semibold text-slate-900">
-                  {new Date(citizen.updatedAt).toLocaleString('es-ES')}
-                </p>
-              </div>
-            )}
-
-            {/* Mostrar todos los demás campos dinámicamente */}
-            {Object.entries(citizen)
-              .filter(([key]) => {
-                // Excluir campos ya mostrados explícitamente y campos técnicos
-                const camposMostrados = [
-                  'cedula', 'nombre', 'fechanacimiento', 'lugarnacimiento', 
-                  'nacionalidad', 'estadocivil', 'domicilio', 'profesion', 
-                  'instruccion', 'fechaexpedicion', 'estado', '_id', 
-                  'createdAt', 'updatedAt', '__v'
-                ];
-                return !camposMostrados.includes(key);
-              })
-              .map(([key, value]) => {
-                // Formatear el nombre del campo
-                const nombreCampo = key
-                  .replace(/([A-Z])/g, ' $1')
-                  .replace(/^./, str => str.toUpperCase())
-                  .trim();
-                
-                // Formatear el valor según el tipo
-                let valorFormateado = String(value);
-                if (value && typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value)) {
-                  // Si parece una fecha, formatearla
-                  try {
-                    valorFormateado = new Date(value).toLocaleString('es-ES');
-                  } catch (e) {
-                    // Si falla, usar el valor original
-                  }
-                }
-                
-                return (
-                  <div key={key}>
-                    <label className="text-sm font-medium text-slate-600">{nombreCampo}</label>
-                    <p className="text-lg font-semibold text-slate-900">{valorFormateado}</p>
-                  </div>
-                );
-              })}
-          </div>
-        </Card>
-      )}
-    </div>
-  );
-}
-
