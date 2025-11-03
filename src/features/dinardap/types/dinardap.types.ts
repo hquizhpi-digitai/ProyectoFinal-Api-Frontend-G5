@@ -23,13 +23,22 @@ export interface DinardapResponse {
 
 // Tipos para Consulta Ciudadano
 export interface CitizenInfo {
+  _id?: string;
   cedula: string;
-  nombre?: string;
-  apellido?: string;
-  fechaNacimiento?: string;
-  direccion?: string;
+  nombre?: string; // Nombre completo
+  fechanacimiento?: string;
+  domicilio?: string;
   estado?: string;
-  [key: string]: any;
+  estadocivil?: string;
+  fechaexpedicion?: string;
+  instruccion?: string;
+  lugarnacimiento?: string;
+  nacionalidad?: string;
+  profesion?: string;
+  __v?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  [key: string]: any; // Para campos adicionales
 }
 
 export interface ConsultaCiudadanoResponse {
